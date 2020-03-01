@@ -3,6 +3,7 @@ package com.benmohammad.masmobius.task.domain;
 import androidx.annotation.NonNull;
 
 import com.benmohammad.masmobius.data.Task;
+
 import com.benmohammad.masmobius.task.domain.TasksListEvent.FilterSelected;
 import com.benmohammad.masmobius.task.domain.TasksListEvent.TaskMarkedActive;
 import com.benmohammad.masmobius.task.domain.TasksListEvent.TaskMarkedComplete;
@@ -53,13 +54,12 @@ public final class TasksListLogic {
                 taskCompleted -> onTaskCompleted(model, taskCompleted),
                 taskActivated -> onTaskActivated(model, taskActivated),
                 completedTaskCleared -> onCompleteTaskCleared(model),
-                filterSelected -> onFilteredSelected(model, filterSelected),
+                filterSelected -> onFilterSelected(model, filterSelected),
                 tasksLoaded -> onTaskLoaded(model, tasksLoaded),
                 taskCreated -> onTaskCreated(),
                 tasksRefreshed -> onTaskRefreshed(model),
                 taskRefreshedFailed -> onTaskRefreshedFailed(model),
-                onTasksLoadedFailed -> onTaskLoadingFailed(model)
-        );
+                onTasksLoadedFailed -> onTaskLoadingFailed(model));
     }
 
     private static Next<TasksListModel, TasksListEffect> onRefreshRequested(TasksListModel model) {
@@ -113,7 +113,7 @@ public final class TasksListLogic {
                         showFeedback(FeedbackType.CLEARED_COMPLETED)));
     }
 
-    private static Next<TasksListModel, TasksListEffect> onFilteredSelected(TasksListModel model, FilterSelected event) {
+    private static Next<TasksListModel, TasksListEffect> onFilterSelected(TasksListModel model, FilterSelected event) {
         return next(model.withTaskFilter(event.filterType()));
     }
 
