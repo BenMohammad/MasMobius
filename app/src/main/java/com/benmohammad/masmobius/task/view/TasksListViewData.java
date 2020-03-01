@@ -75,7 +75,7 @@ public abstract class TasksListViewData {
     public interface ViewState_dataenum {
         dataenum_case AwaitingTasks();
         dataenum_case EmptyTasks(EmptyTaskViewData viewData);
-        dataenum_case HasTasks(ImmutableList<TasksListViewData> taskViewData);
+        dataenum_case HasTasks(ImmutableList<TaskViewData> taskViewData);
 
     }
 
