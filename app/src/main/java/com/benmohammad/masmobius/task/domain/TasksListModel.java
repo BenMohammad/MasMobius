@@ -52,7 +52,7 @@ public abstract class TasksListModel {
         return toBuilder().loading(loading).build();
     }
 
-    public TasksListModel withFilterType(TasksFilterType filter) {
+    public TasksListModel withTaskFilter(TasksFilterType filter) {
         return toBuilder().filter(filter).build();
     }
 
