@@ -18,7 +18,7 @@ public class TasksListModelBundlePacker {
         static final String TASKS = "model_tasks";
     }
 
-    public static Bundle tasksListsModelToBundle(TasksListModel model) {
+    public static Bundle tasksListModelToBundle(TasksListModel model) {
         Bundle b = new Bundle();
         b.putSerializable(TasksListModelBundleIdentifiers.FILTER, model.filter());
         b.putBoolean(TasksListModelBundleIdentifiers.LOADING, model.loading());

@@ -18,10 +18,10 @@ public class TasksRemoteDataSource implements TasksDataSource {
 
     private static TasksRemoteDataSource INSTANCE;
     public static final int SERVICE_LATENCY_IN_MILLIS = 1000;
-    private static final Map<String, Task> TASKS_SERVIVE_DATA;
+    private static final Map<String, Task> TASKS_SERVICE_DATA;
 
     static {
-        TASKS_SERVIVE_DATA = new LinkedHashMap<>();
+        TASKS_SERVICE_DATA = new LinkedHashMap<>();
         addTask("1234", "Build tower in Pisa", "Ground looks good, no foundation work required.");
         addTask("4321", "Finish bridge in Tacoma", "Found awesome girders at half the cost!");
     }
@@ -36,7 +36,7 @@ public class TasksRemoteDataSource implements TasksDataSource {
 
     private static void addTask(String id, String title, String description) {
         Task newTask = Task.create(id, TaskDetails.create(title, description));
-        TASKS_SERVIVE_DATA.put(newTask.id(), newTask);
+        TASKS_SERVICE_DATA.put(newTask.id(), newTask);
     }
 
 
@@ -44,7 +44,7 @@ public class TasksRemoteDataSource implements TasksDataSource {
 
     @Override
     public Flowable<List<Task>> getTasks() {
-        return Flowable.fromIterable(TASKS_SERVIVE_DATA.values())
+        return Flowable.fromIterable(TASKS_SERVICE_DATA.values())
                 .delay(SERVICE_LATENCY_IN_MILLIS, TimeUnit.MILLISECONDS)
                 .toList()
                 .toFlowable();
@@ -52,7 +52,7 @@ public class TasksRemoteDataSource implements TasksDataSource {
 
     @Override
     public Flowable<Optional<Task>> getTask(@NonNull String taskId) {
-        final Task task = TASKS_SERVIVE_DATA.get(taskId);
+        final Task task = TASKS_SERVICE_DATA.get(taskId);
         if(task != null) {
             return Flowable.just(Optional.of(task));
         } else {
@@ -62,16 +62,16 @@ public class TasksRemoteDataSource implements TasksDataSource {
 
     @Override
     public void saveTask(@NonNull Task task) {
-        TASKS_SERVIVE_DATA.put(task.id(), task);
+        TASKS_SERVICE_DATA.put(task.id(), task);
     }
 
     @Override
     public void deleteAllTasks() {
-        TASKS_SERVIVE_DATA.clear();
+        TASKS_SERVICE_DATA.clear();
     }
 
     @Override
     public void deleteTask(@NonNull String taskId) {
-        TASKS_SERVIVE_DATA.remove(taskId);
+        TASKS_SERVICE_DATA.remove(taskId);
     }
 }

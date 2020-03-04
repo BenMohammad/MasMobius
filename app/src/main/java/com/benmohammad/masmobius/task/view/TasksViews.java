@@ -76,7 +76,7 @@ public class TasksViews implements TasksListViewActions, Connectable<TasksListVi
     }
 
 
-    public View getView() {
+    public View getRootView() {
         return mRoot;
     }
 

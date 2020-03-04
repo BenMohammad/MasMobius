@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableList;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Predicate;
@@ -24,7 +25,7 @@ public class TaskFilters {
 
     public static ImmutableList<Task> filterTasks(List<Task> tasks, TasksFilterType filter) {
         return Observable.fromIterable(checkNotNull(tasks))
-                .filter(FILTERS.get(filter))
+                .filter(FILTERS.get(filter))// this line is null ------------------------------>>>>
                 .toList()
                 .map(ImmutableList::copyOf)
                 .blockingGet();
