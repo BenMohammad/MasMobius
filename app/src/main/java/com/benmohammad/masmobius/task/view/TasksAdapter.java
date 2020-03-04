@@ -58,8 +58,8 @@ public class TasksAdapter extends BaseAdapter {
         CheckBox completeCB = rowView.findViewById(R.id.complete);
         completeCB.setChecked(task.completed());
 
-        Drawable backGround = parent.getContext().getResources().getDrawable(task.backgroundDrawableId());
-        rowView.setBackgroundDrawable(backGround);
+//        Drawable backGround = parent.getContext().getResources().getDrawable(task.backgroundDrawableId());
+  //      rowView.setBackgroundDrawable(backGround);
 
         completeCB.setOnClickListener( v -> {
             if (taskItemListener == null) return;

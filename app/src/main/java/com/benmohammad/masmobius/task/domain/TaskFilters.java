@@ -18,7 +18,7 @@ public class TaskFilters {
 
     static {
         FILTERS = new HashMap<>();
-        FILTERS.put(TasksFilterType.ACTIVE_TASKS, t -> true);
+        FILTERS.put(TasksFilterType.ALL_TASKS, t -> true);
         FILTERS.put(TasksFilterType.ACTIVE_TASKS, t -> !t.details().completed());
         FILTERS.put(TasksFilterType.COMPLETED_TASKS, t -> t.details().completed());
     }
