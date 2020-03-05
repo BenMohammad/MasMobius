@@ -24,6 +24,7 @@ import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
 
+import static com.benmohammad.masmobius.data.source.local.TasksPersistenceContract.TaskEntry.*;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class TasksLocalDataSource implements TasksDataSource {
@@ -43,10 +44,10 @@ public class TasksLocalDataSource implements TasksDataSource {
 
     @NonNull
     private Task getTask(@NonNull Cursor c) {
-        String itemId = c.getString(c.getColumnIndexOrThrow(TasksPersistenceContract.TaskEntry.COLUMN_NAME_ENTRY_ID));
-        String title = c.getString(c.getColumnIndexOrThrow(TasksPersistenceContract.TaskEntry.COLUMN_NAME_TITLE));
-        String description = c.getString(c.getColumnIndexOrThrow(TasksPersistenceContract.TaskEntry.COLUMN_NAME_DESCRIPTION));
-        boolean completed = c.getInt(c.getColumnIndexOrThrow(TasksPersistenceContract.TaskEntry.COLUMN_NAME_COMPLETED)) == 1;
+        String itemId = c.getString(c.getColumnIndexOrThrow(COLUMN_NAME_ENTRY_ID));
+        String title = c.getString(c.getColumnIndexOrThrow(COLUMN_NAME_TITLE));
+        String description = c.getString(c.getColumnIndexOrThrow(COLUMN_NAME_DESCRIPTION));
+        boolean completed = c.getInt(c.getColumnIndexOrThrow(COLUMN_NAME_COMPLETED)) == 1;
         TaskDetails details =
                 TaskDetails.builder().title(title).description(description).completed(completed).build();
         return Task.create(itemId, details);
@@ -56,7 +57,6 @@ public class TasksLocalDataSource implements TasksDataSource {
         if(INSTANCE == null) {
             INSTANCE = new TasksLocalDataSource(context, schedulerProvider);
         }
-
         return INSTANCE;
     }
 
@@ -67,15 +67,15 @@ public class TasksLocalDataSource implements TasksDataSource {
     @Override
     public Flowable<List<Task>> getTasks() {
         String[] projection = {
-                TasksPersistenceContract.TaskEntry.COLUMN_NAME_ENTRY_ID,
-                TasksPersistenceContract.TaskEntry.COLUMN_NAME_TITLE,
-                TasksPersistenceContract.TaskEntry.COLUMN_NAME_DESCRIPTION,
-                TasksPersistenceContract.TaskEntry.COLUMN_NAME_COMPLETED
+                COLUMN_NAME_ENTRY_ID,
+                COLUMN_NAME_TITLE,
+                COLUMN_NAME_DESCRIPTION,
+                COLUMN_NAME_COMPLETED
         };
 
-        String sql = String.format("SELECt %s FROM %s", TextUtils.join(",", projection), TasksPersistenceContract.TaskEntry.TABLE_NAME);
+        String sql = String.format("SELECT %s FROM %s", TextUtils.join(",", projection), TABLE_NAME);
         return mDatabaseHelper
-                .createQuery(TasksPersistenceContract.TaskEntry.TABLE_NAME, sql)
+                .createQuery(TABLE_NAME, sql)
                 .mapToList(mTasksMapperFunction)
                 .toFlowable(BackpressureStrategy.BUFFER);
     }
@@ -84,15 +84,15 @@ public class TasksLocalDataSource implements TasksDataSource {
     public Flowable<Optional<Task>> getTask(@NonNull String taskId) {
         String[] projection = {
 
-                TasksPersistenceContract.TaskEntry.COLUMN_NAME_ENTRY_ID,
-                TasksPersistenceContract.TaskEntry.COLUMN_NAME_TITLE,
-                TasksPersistenceContract.TaskEntry.COLUMN_NAME_DESCRIPTION,
-                TasksPersistenceContract.TaskEntry.COLUMN_NAME_COMPLETED
+                COLUMN_NAME_ENTRY_ID,
+                COLUMN_NAME_TITLE,
+                COLUMN_NAME_DESCRIPTION,
+                COLUMN_NAME_COMPLETED
         };
 
-        String sql = String.format("SELECT %S FROM %s WHERE %s LIKE ?", TextUtils.join(",", projection), TasksPersistenceContract.TaskEntry.TABLE_NAME, TasksPersistenceContract.TaskEntry.COLUMN_NAME_ENTRY_ID);
+        String sql = String.format("SELECT %s FROM %s WHERE %s LIKE ?", TextUtils.join(",", projection), TABLE_NAME, COLUMN_NAME_ENTRY_ID);
         return mDatabaseHelper
-                .createQuery(TasksPersistenceContract.TaskEntry.TABLE_NAME, sql, taskId)
+                .createQuery(TABLE_NAME, sql, taskId)
                 .mapToOneOrDefault(
                         cursor -> Optional.of(mTasksMapperFunction.apply(cursor)), Optional.<Task> absent())
                 .toFlowable(BackpressureStrategy.BUFFER);
@@ -102,22 +102,22 @@ public class TasksLocalDataSource implements TasksDataSource {
     public void saveTask(@NonNull Task task) {
         checkNotNull(task);
         ContentValues values = new ContentValues();
-        values.put(TasksPersistenceContract.TaskEntry.COLUMN_NAME_ENTRY_ID, task.id());
-        values.put(TasksPersistenceContract.TaskEntry.COLUMN_NAME_TITLE, task.details().title());
-        values.put(TasksPersistenceContract.TaskEntry.COLUMN_NAME_DESCRIPTION, task.details().description());
-        values.put(TasksPersistenceContract.TaskEntry.COLUMN_NAME_COMPLETED, task.details().completed());
-        mDatabaseHelper.insert(TasksPersistenceContract.TaskEntry.TABLE_NAME, values, SQLiteDatabase.CONFLICT_REPLACE);
+        values.put(COLUMN_NAME_ENTRY_ID, task.id());
+        values.put(COLUMN_NAME_TITLE, task.details().title());
+        values.put(COLUMN_NAME_DESCRIPTION, task.details().description());
+        values.put(COLUMN_NAME_COMPLETED, task.details().completed());
+        mDatabaseHelper.insert(TABLE_NAME, values, SQLiteDatabase.CONFLICT_REPLACE);
     }
 
     @Override
     public void deleteAllTasks() {
-        mDatabaseHelper.delete(TasksPersistenceContract.TaskEntry.TABLE_NAME, null);
+        mDatabaseHelper.delete(TABLE_NAME, null);
     }
 
     @Override
     public void deleteTask(@NonNull String taskId) {
-        String selection = TasksPersistenceContract.TaskEntry.COLUMN_NAME_ENTRY_ID + "LIKE ?";
+        String selection = COLUMN_NAME_ENTRY_ID + " LIKE ? ";
         String[] selectionArgs = {taskId};
-        mDatabaseHelper.delete(TasksPersistenceContract.TaskEntry.TABLE_NAME, selection, selectionArgs);
+        mDatabaseHelper.delete(TABLE_NAME, selection, selectionArgs);
     }
 }

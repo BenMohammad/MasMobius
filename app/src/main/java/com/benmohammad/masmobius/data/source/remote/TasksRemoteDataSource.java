@@ -17,7 +17,7 @@ import io.reactivex.Flowable;
 public class TasksRemoteDataSource implements TasksDataSource {
 
     private static TasksRemoteDataSource INSTANCE;
-    public static final int SERVICE_LATENCY_IN_MILLIS = 1000;
+    public static final int SERVICE_LATENCY_IN_MILLIS = 3000;
     private static final Map<String, Task> TASKS_SERVICE_DATA;
 
     static {
@@ -54,7 +54,8 @@ public class TasksRemoteDataSource implements TasksDataSource {
     public Flowable<Optional<Task>> getTask(@NonNull String taskId) {
         final Task task = TASKS_SERVICE_DATA.get(taskId);
         if(task != null) {
-            return Flowable.just(Optional.of(task));
+            return Flowable.just(Optional.of(task))
+                    .delay(SERVICE_LATENCY_IN_MILLIS, TimeUnit.MILLISECONDS);
         } else {
             return Flowable.empty();
         }

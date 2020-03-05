@@ -40,7 +40,7 @@ public class TasksListModelBundlePacker {
                 .filter((TasksFilterType) b.getSerializable(TasksListModelBundleIdentifiers.FILTER))
                 .loading(b.getBoolean(TasksListModelBundleIdentifiers.LOADING));
 
-        ArrayList<Bundle> bundles =b.getParcelableArrayList(TasksListModelBundleIdentifiers.TASKS);
+        ArrayList<Bundle> bundles = b.getParcelableArrayList(TasksListModelBundleIdentifiers.TASKS);
         if(bundles == null) return builder.build();
 
         ImmutableList.Builder<Task> tasks = ImmutableList.builder();
