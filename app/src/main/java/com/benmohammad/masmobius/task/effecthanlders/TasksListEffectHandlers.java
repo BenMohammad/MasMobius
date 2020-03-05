@@ -69,8 +69,9 @@ public class TasksListEffectHandlers {
                 .flatMap(
                         either -> either.map(
                                 left -> Single.just(tasksLoadingFailed()),
-                                right -> Observable.fromIterable(right.value())
-                                .concatMapCompletable(
+                                right ->
+                                        Observable.fromIterable(right.value())
+                                        .concatMapCompletable(
                                         t -> Completable.fromAction(
                                                 () -> localSource.saveTask(t)))
                                         .andThen(Single.just(taskRefreshed()))
@@ -82,7 +83,7 @@ public class TasksListEffectHandlers {
 
     static ObservableTransformer<LoadTasks, TasksListEvent> loadTaskHandler(TasksDataSource dataSource) {
         return loadTasks -> loadTasks.flatMap(
-                effects ->
+                effect ->
                         dataSource
                 .getTasks()
 

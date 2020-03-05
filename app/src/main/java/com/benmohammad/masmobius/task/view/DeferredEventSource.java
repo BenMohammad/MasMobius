@@ -35,7 +35,7 @@ public class DeferredEventSource<E> implements EventSource<E> {
                         }
                     }
                 });
-        t.start();;
+        t.start();
         return () -> {
             run.set(false);
             t.interrupt();

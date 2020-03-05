@@ -111,7 +111,7 @@ public class TasksViews implements TasksListViewActions, Connectable<TasksListVi
 
     @Nonnull
     @Override
-    public Connection<TasksListViewData> connect(Consumer<TasksListEvent> output) throws ConnectionLimitExceededException {
+    public Connection<TasksListViewData> connect(Consumer<TasksListEvent> output)  {
         addUiListener(output);
         Disposable disposable = menuEvents.subscribe(output::accept);
 
@@ -137,7 +137,7 @@ public class TasksViews implements TasksListViewActions, Connectable<TasksListVi
         mFilteringLabelView.setText(value.filterLabel());
         value.viewState()
                 .match(
-                        awaiting -> showNoTasksViewState(),
+                        awaitingTasks -> showNoTasksViewState(),
                         emptyTasks -> showEmptyTasksState(emptyTasks.viewData()),
                         hasTasks -> showTasks(hasTasks.taskViewData()));
     }

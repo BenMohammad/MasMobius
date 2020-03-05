@@ -11,7 +11,6 @@ import com.spotify.mobius.android.MobiusAndroid;
 import com.spotify.mobius.rx2.RxMobius;
 
 import io.reactivex.ObservableTransformer;
-import io.reactivex.android.plugins.RxAndroidPlugins;
 
 public class TasksInjector {
 

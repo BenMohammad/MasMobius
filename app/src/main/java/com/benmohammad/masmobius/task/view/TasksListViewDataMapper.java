@@ -45,7 +45,6 @@ public class TasksListViewDataMapper {
                 return R.string.label_completed;
 
             default:
-            case ALL_TASKS:
                 return R.string.label_all;
         }
     }

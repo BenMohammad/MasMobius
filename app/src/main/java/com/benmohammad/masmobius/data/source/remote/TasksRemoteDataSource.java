@@ -35,7 +35,7 @@ public class TasksRemoteDataSource implements TasksDataSource {
     }
 
     private static void addTask(String id, String title, String description) {
-        Task newTask = Task.create(id, TaskDetails.create(title, description));
+        Task newTask = Task.create(id, TaskDetails.create(title, description, false));
         TASKS_SERVICE_DATA.put(newTask.id(), newTask);
     }
 
