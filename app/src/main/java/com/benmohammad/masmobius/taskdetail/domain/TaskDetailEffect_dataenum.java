@@ -13,6 +13,6 @@ public interface TaskDetailEffect_dataenum {
     dataenum_case NotifyTaskMarkedActive();
     dataenum_case NotifyTaskSaveFailed();
     dataenum_case NotifyTaskDeletionFailed();
-    dataenum_case OpenTaskEditor();
+    dataenum_case OpenTaskEditor(Task task);
     dataenum_case Exit();
 }
