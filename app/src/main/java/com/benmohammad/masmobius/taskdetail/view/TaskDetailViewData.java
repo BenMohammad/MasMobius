@@ -9,7 +9,7 @@ public abstract class TaskDetailViewData {
     public abstract TextViewData description();
     public abstract boolean completedChecked();
 
-    public static Builder build() {
+    public static Builder builder() {
         return new AutoValue_TaskDetailViewData.Builder();
     }
 
