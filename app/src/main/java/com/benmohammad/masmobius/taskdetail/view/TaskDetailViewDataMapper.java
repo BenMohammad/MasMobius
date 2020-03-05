@@ -11,7 +11,7 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 
 public class TaskDetailViewDataMapper {
 
-    public static TaskDetailViewData taskToTaskDetails(Task task) {
+    public static TaskDetailViewData taskToTaskViewData(Task task) {
         TaskDetails details = task.details();
         String title = details.title();
         String description = details.description();

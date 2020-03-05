@@ -23,6 +23,7 @@ import com.benmohammad.masmobius.task.effecthanlders.TasksListEffectHandlers;
 import com.benmohammad.masmobius.task.view.DeferredEventSource;
 import com.benmohammad.masmobius.task.view.TasksListViewDataMapper;
 import com.benmohammad.masmobius.task.view.TasksViews;
+import com.benmohammad.masmobius.taskdetail.TaskDetailActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.spotify.mobius.MobiusLoop;
 
@@ -146,7 +147,7 @@ public class TaskFragment extends Fragment {
     }
 
     public void showTaskDetailUi(Task task) {
-        //startActivity(TaskDetailsActivity.showTask(getContext(), task));
+        startActivity(TaskDetailActivity.showTask(getContext(), task));
     }
 
 }
