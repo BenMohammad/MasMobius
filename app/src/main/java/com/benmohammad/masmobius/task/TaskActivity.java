@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 
 import com.benmohammad.masmobius.R;
+import com.benmohammad.masmobius.stats.StatisticsActivity;
 import com.benmohammad.masmobius.util.ActivityUtils;
 import com.google.android.material.navigation.NavigationView;
 
@@ -60,13 +61,12 @@ public class TaskActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(
                 menuItem -> {
                     switch(menuItem.getItemId()) {
+                        case R.id.statistics_navigation_menu_item:
+                            Intent intent = new Intent(TaskActivity.this, StatisticsActivity.class);
+                            break;
+
 
                         case R.id.list_navigation_menu_item:
-                        break;
-
-                        case R.id.statistics_navigation_menu_item:
-                            //Intent intent = new Intent(TaskActivity.this, StatisticsActivity.class);
-                            break;
 
                         default:
                             break;
