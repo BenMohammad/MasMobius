@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.benmohammad.masmobius.R;
+import com.benmohammad.masmobius.addedittask.AddEditTaskActivity;
 import com.benmohammad.masmobius.data.Task;
 import com.benmohammad.masmobius.data.TaskBundlePacker;
 import com.benmohammad.masmobius.taskdetail.domain.TaskDetailEvent;
@@ -26,6 +27,7 @@ import com.spotify.mobius.MobiusLoop;
 
 import io.reactivex.subjects.PublishSubject;
 
+import static com.benmohammad.masmobius.taskdetail.TaskDetailInjector.*;
 import static com.benmohammad.masmobius.taskdetail.domain.TaskDetailEvent.*;
 import static com.spotify.mobius.extras.Connectables.contramap;
 
@@ -52,7 +54,7 @@ public class TaskDetailFragment extends Fragment {
         setHasOptionsMenu(true);
         FloatingActionButton fab = getActivity().findViewById(R.id.fab_edit_task);
         mTaskDetailViews = new TaskDetailViews(inflater, container, fab, mMenuEvents);
-        mController = TaskDetailInjector.createController(
+        mController = createController(
                 TaskDetailEffectHandlers.createEffectHandlers(
                         mTaskDetailViews, getContext(), this::dismiss, this::openTaskEditor),
                 resolveDefaultModel(savedInstanceState));
@@ -114,7 +116,7 @@ public class TaskDetailFragment extends Fragment {
     }
 
     public void openTaskEditor(@NonNull Task task) {
-       // startActivityForResult(AddEditTaskActivity.editTask(getContext(), task), REQUEST_EDIT_TASK);
+        startActivityForResult(AddEditTaskActivity.editTask(getContext(), task), REQUEST_EDIT_TASK);
 
     }
 

@@ -13,7 +13,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class AddEditTaskModeBundlePacker {
 
-    public static Bundle addEditTaskToBundle(AddEditTaskModel model) {
+    public static Bundle addEditTaskModelToBundle(AddEditTaskModel model) {
         Bundle b = new Bundle();
         b.putBundle("task_details", TaskBundlePacker.taskDetailsToBundle(model.details()));
         Optional<Bundle> modeBundle = addEditModeToBundle(model.mode());

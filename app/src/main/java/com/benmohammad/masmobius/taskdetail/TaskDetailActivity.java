@@ -26,8 +26,8 @@ public class TaskDetailActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.taskdetail_act);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
