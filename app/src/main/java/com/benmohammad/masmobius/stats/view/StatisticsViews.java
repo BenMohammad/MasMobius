@@ -56,10 +56,10 @@ public class StatisticsViews implements Connectable<StatisticsState, StatisticsE
                         mStatisticsTV.setText(R.string.statistics_no_tasks);
                     } else {
                         Resources resources = mRoot.getContext().getResources();
-                        String activeTaskString = resources.getString(R.string.statistics_active_tasks);
+                        String activeTaskString = resources.getString(R.string.statistics_active_tasks, numOfIncompleteTasks);
 
                         String completedTaskString =
-                                resources.getString(R.string.statistics_completed_tasks);
+                                resources.getString(R.string.statistics_completed_tasks, numOfCompletedTasks);
 
                         String displayString = activeTaskString + "\n" + completedTaskString;
                         mStatisticsTV.setText(displayString);

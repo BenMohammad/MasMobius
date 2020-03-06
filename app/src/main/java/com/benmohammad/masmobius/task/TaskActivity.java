@@ -63,6 +63,7 @@ public class TaskActivity extends AppCompatActivity {
                     switch(menuItem.getItemId()) {
                         case R.id.statistics_navigation_menu_item:
                             Intent intent = new Intent(TaskActivity.this, StatisticsActivity.class);
+                            startActivity(intent);
                             break;
 
 
